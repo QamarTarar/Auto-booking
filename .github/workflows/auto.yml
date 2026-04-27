@@ -1,7 +1,5 @@
 name: Auto Booking
 on:
-  schedule:
-    - cron: '*/1 * * * *'
   workflow_dispatch:
 
 jobs:
@@ -15,22 +13,8 @@ jobs:
         with:
           python-version: '3.10'
       
-      - name: Install Chrome and ChromeDriver
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y chromium-browser chromium-chromedriver
-          sudo ln -s /usr/lib/chromium-browser/chromedriver /usr/local/bin/chromedriver
+      - name: Install requests
+        run: pip install requests
       
-      - name: Install Python packages
-        run: |
-          pip install selenium
-      
-      - name: Run booking script
+      - name: Run script
         run: python booking_script.py
-      
-      - name: Upload screenshot
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: booking-screenshot
-          path: booking_result.png
